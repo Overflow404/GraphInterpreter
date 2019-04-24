@@ -2,7 +2,6 @@ package fetcher;
 
 import org.junit.Assert;
 import org.junit.Test;
-import results.FetchResult;
 
 import java.io.ByteArrayInputStream;
 

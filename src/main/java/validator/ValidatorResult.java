@@ -1,4 +1,6 @@
-package results;
+package validator;
+
+import results.Result;
 
 public class ValidatorResult {
 

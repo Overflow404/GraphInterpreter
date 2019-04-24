@@ -1,4 +1,6 @@
-package results;
+package fetcher;
+
+import results.Result;
 
 import java.util.Objects;
 

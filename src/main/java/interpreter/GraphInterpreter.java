@@ -1,11 +1,11 @@
 package interpreter;
 
 import fetcher.ConsoleFetcher;
-import results.FetchResult;
+import fetcher.FetchResult;
 import fetcher.Fetcher;
 import tokenizer.SimpleTokenizer;
 import tokenizer.Tokenizer;
-import results.TokenizerResult;
+import tokenizer.TokenizerResult;
 import validator.GraphValidator;
 import validator.Validator;
 

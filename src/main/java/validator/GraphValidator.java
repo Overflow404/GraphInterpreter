@@ -1,7 +1,6 @@
 package validator;
 
-import results.FetchResult;
-import results.ValidatorResult;
+import fetcher.FetchResult;
 
 import java.util.Arrays;
 import java.util.List;

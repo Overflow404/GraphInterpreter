@@ -1,7 +1,6 @@
 package tokenizer;
 
-import results.FetchResult;
-import results.TokenizerResult;
+import fetcher.FetchResult;
 
 import java.util.ArrayList;
 import java.util.List;

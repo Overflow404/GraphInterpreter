@@ -1,7 +1,5 @@
 package fetcher;
 
-import results.FetchResult;
-
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 

@@ -1,7 +1,6 @@
 package validator;
 
-import results.FetchResult;
-import results.ValidatorResult;
+import fetcher.FetchResult;
 
 public interface Validator {
 

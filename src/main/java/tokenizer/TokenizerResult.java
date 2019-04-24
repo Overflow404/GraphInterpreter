@@ -1,6 +1,6 @@
-package results;
+package tokenizer;
 
-import tokenizer.Token;
+import results.Result;
 
 import java.util.ArrayList;
 import java.util.List;
