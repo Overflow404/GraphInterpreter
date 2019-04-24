@@ -1,21 +1,25 @@
 package validator;
 
 import results.Result;
+import tokenizer.Token;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ValidatorResult {
 
-    private static final String EMPTY_STRING = "";
+    private static final List<Token> EMPTY_LIST = new ArrayList<>();
     private Result result;
-    private String content;
+    private List<Token> tokens;
 
     private ValidatorResult() {}
 
-    public static ValidatorResult createSuccessfulValidationResult(String content) {
-        return new ValidatorResult().addContent(content).addResult(Result.SUCCESSFUL);
+    public static ValidatorResult createSuccessfulValidationResult(List<Token> tokens) {
+        return new ValidatorResult().addTokens(tokens).addResult(Result.SUCCESSFUL);
     }
 
     public static ValidatorResult createUnsuccessfulValidationResult() {
-        return new ValidatorResult().addContent(EMPTY_STRING).addResult(Result.UNSUCCESSFUL);
+        return new ValidatorResult().addTokens(EMPTY_LIST).addResult(Result.UNSUCCESSFUL);
     }
 
     private ValidatorResult addResult(Result result) {
@@ -23,9 +27,20 @@ public class ValidatorResult {
         return this;
     }
 
-    private ValidatorResult addContent(String content) {
-        this.content = content;
+    private ValidatorResult addTokens(List<Token> tokens) {
+        this.tokens = tokens;
         return this;
     }
 
+    public boolean isSuccessful() {
+        return result == Result.SUCCESSFUL;
+    }
+
+    @Override
+    public String toString() {
+        return "ValidatorResult{" +
+                "result=" + result +
+                ", tokens=" + tokens +
+                '}';
+    }
 }

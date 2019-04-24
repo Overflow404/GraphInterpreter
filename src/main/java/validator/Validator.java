@@ -1,8 +1,8 @@
 package validator;
 
-import fetcher.FetchResult;
+import tokenizer.TokenizerResult;
 
 public interface Validator {
 
-    ValidatorResult validate(FetchResult result);
+    ValidatorResult validate(TokenizerResult result);
 }

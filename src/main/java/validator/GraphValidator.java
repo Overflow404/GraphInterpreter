@@ -1,45 +1,39 @@
 package validator;
 
 import fetcher.FetchResult;
-
-import java.util.Arrays;
+import operations.Operations;
+import org.apache.commons.lang3.EnumUtils;
+import tokenizer.Token;
+import tokenizer.TokenizerResult;
 import java.util.List;
 
 public class GraphValidator implements Validator {
 
-    public enum Operation {
-        ADD_NODE,
-        ADD_EDGE
-    }
-
-    private int operationIndex;
-
-    public GraphValidator() {
-        operationIndex = 0;
-    }
-
     /** @Precondition: Successful fetch. */
     @Override
-    public ValidatorResult validate(FetchResult result) {
-        List<String> tokens = tokenize(result.getContent());
-
-        if (tokens.isEmpty()) {
+    public ValidatorResult validate(TokenizerResult result) {
+        if (isntWellKnownOperation(result)) {
             return ValidatorResult.createUnsuccessfulValidationResult();
         }
 
-        String operation = tokens.get(operationIndex);
-        //if (isWellKnownOperation(operation)) {
+        if (malformedInstruction(result)) {
+            return ValidatorResult.createUnsuccessfulValidationResult();
+        }
 
-        //}
         return null;
     }
 
-    //private boolean isWellKnownOperation(String operation) {
+    private boolean malformedInstruction(TokenizerResult result) {
+        List<Token> tokens = result.getTokens();
 
-    //}
-
-    private List<String> tokenize(String content) {
-        return Arrays.asList(content.split("\\s+"));
+        return true;
     }
+
+    private boolean isntWellKnownOperation(TokenizerResult result) {
+        Token operation = result.getOperation();
+        return !EnumUtils.isValidEnum(Operations.class, operation.getToken().toUpperCase());
+    }
+
+
 
 }

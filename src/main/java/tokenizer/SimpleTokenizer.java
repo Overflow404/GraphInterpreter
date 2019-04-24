@@ -11,10 +11,6 @@ public class SimpleTokenizer implements Tokenizer {
     public TokenizerResult tokenize(FetchResult result) {
         String content = result.getContent();
         List<Token> tokens = tokenizeInstruction(content);
-
-        if (tokens.isEmpty()) {
-            return TokenizerResult.createUnsuccessfulTokenizationResult();
-        }
         return TokenizerResult.createSuccessfulTokenizationResult(tokens);
     }
 

@@ -8,6 +8,7 @@ import tokenizer.Tokenizer;
 import tokenizer.TokenizerResult;
 import validator.GraphValidator;
 import validator.Validator;
+import validator.ValidatorResult;
 
 public class GraphInterpreter implements Runnable {
 
@@ -29,15 +30,13 @@ public class GraphInterpreter implements Runnable {
     }
 
     public void run() {
-        FetchResult fetchingResult;
-        //ValidatorResult result;
-
         while (!stopped) {
-            fetchingResult = fetcher.fetch();
+            FetchResult fetchingResult = fetcher.fetch();
             if (fetchingResult.isSuccessful()) {
                 TokenizerResult tokenizationResult = tokenizer.tokenize(fetchingResult);
                 if (tokenizationResult.isSuccessful()) {
-                    System.out.println(tokenizationResult);
+                    ValidatorResult validationResult = validator.validate(tokenizationResult);
+                    System.out.println(validationResult);
                 }
                 //validator.validate(fetchingResult);
                 //System.out.println(result);
