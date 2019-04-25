@@ -23,4 +23,8 @@ public class Displayer implements Runnable {
         frame.setSize(600,600);
         frame.setVisible(true);
     }
+
+    public void stop() {
+        System.exit(0);
+    }
 }

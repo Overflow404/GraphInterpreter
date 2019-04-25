@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 
-import static results.Utils.EMPTY_COMMAND;
+import static Utils.Utils.EMPTY_COMMAND;
 
 public class ConsoleFetcherTest {
 

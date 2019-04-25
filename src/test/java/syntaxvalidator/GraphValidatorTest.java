@@ -1,4 +1,4 @@
-package validator;
+package syntaxvalidator;
 
 import org.junit.Assert;
 import org.junit.Before;

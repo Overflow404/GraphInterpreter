@@ -7,6 +7,9 @@ public enum Operations {
     ADD_EDGE,
     REMOVE_EDGE,
     DISPLAY,
+    NEIGHBOURS,
+    BFS,
+    DFS,
     HELP,
     QUIT
 }

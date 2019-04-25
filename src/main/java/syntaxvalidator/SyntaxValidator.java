@@ -1,8 +1,8 @@
-package validator;
+package syntaxvalidator;
 
 import tokenizer.TokenizerResult;
 
-public interface Validator {
+public interface SyntaxValidator {
 
     ValidatorResult validate(TokenizerResult result);
 }

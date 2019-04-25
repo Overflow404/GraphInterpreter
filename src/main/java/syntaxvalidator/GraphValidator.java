@@ -1,14 +1,13 @@
-package validator;
+package syntaxvalidator;
 
+import Utils.Utils;
 import operations.Operations;
 import org.apache.commons.lang3.EnumUtils;
 import tokenizer.Token;
 import tokenizer.TokenizerResult;
-
 import java.util.List;
 
-
-public class GraphValidator implements Validator {
+public class GraphValidator implements SyntaxValidator {
 
     @Override
     public ValidatorResult validate(TokenizerResult result) {
@@ -59,6 +58,21 @@ public class GraphValidator implements Validator {
                     return false;
                 }
                 break;
+            case NEIGHBOURS:
+                if (malformedNeighboursCommand(tokens)) {
+                    return false;
+                }
+                break;
+            case BFS:
+                if (malformedBfsCommand(tokens)) {
+                    return false;
+                }
+                break;
+            case DFS:
+                if (malformedDfsCommand(tokens)) {
+                    return false;
+                }
+                break;
             case HELP:
                 if (malformedHelpCommand(tokens)) {
                     return false;
@@ -74,36 +88,48 @@ public class GraphValidator implements Validator {
         return true;
     }
 
+    private boolean malformedDfsCommand(List<Token> tokens) {
+        return tokens.size() == Utils.DFS_COMMAND_LENGTH;
+    }
+
+    private boolean malformedBfsCommand(List<Token> tokens) {
+        return tokens.size() == Utils.BFS_COMMAND_LENGTH;
+    }
+
+    private boolean malformedNeighboursCommand(List<Token> tokens) {
+        return tokens.size() == Utils.NEIGHBOURS_COMMAND_LENGTH;
+    }
+
     private boolean malformedQuitCommand(List<Token> tokens) {
-        return tokens.size() == 1;
+        return tokens.size() == Utils.QUIT_COMMAND_LENGTH;
     }
 
     private boolean malformedHelpCommand(List<Token> tokens) {
-        return tokens.size() == 1;
+        return tokens.size() == Utils.HELP_COMMAND_LENGTH;
     }
 
     private boolean malformedRemoveEdgeCommand(List<Token> tokens) {
-        return tokens.size() == 3;
+        return tokens.size() == Utils.REMOVE_EDGE_COMMAND_LENGTH;
     }
 
     private boolean malformedRemoveNodeCommand(List<Token> tokens) {
-        return tokens.size() == 3;
+        return tokens.size() == Utils.REMOVE_NODE_COMMAND_LENGTH;
     }
 
     private boolean malformedDisplayCommand(List<Token> tokens) {
-        return tokens.size() == 2;
+        return tokens.size() == Utils.DISPLAY_COMMAND_LENGTH;
     }
 
     private boolean malformedNewGraphCommand(List<Token> tokens) {
-        return tokens.size() == 2;
+        return tokens.size() == Utils.NEW_GRAPH_COMMAND_LENGTH;
     }
 
     private boolean malformedAddEdgeCommand(List<Token> tokens) {
-        return tokens.size() == 5;
+        return tokens.size() == Utils.ADD_EDGE_COMMAND_LENGTH;
     }
 
     private boolean malformedAddNodeCommand(List<Token> tokens) {
-        return tokens.size() == 3;
+        return tokens.size() == Utils.ADD_NODE_COMMAND_LENGTH;
     }
 
     private boolean isAWellKnownOperation(TokenizerResult result) {

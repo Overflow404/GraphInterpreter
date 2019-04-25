@@ -9,14 +9,14 @@ import fetcher.Fetcher;
 import tokenizer.SimpleTokenizer;
 import tokenizer.Tokenizer;
 import tokenizer.TokenizerResult;
-import validator.GraphValidator;
-import validator.Validator;
-import validator.ValidatorResult;
+import syntaxvalidator.GraphValidator;
+import syntaxvalidator.SyntaxValidator;
+import syntaxvalidator.ValidatorResult;
 
 public class GraphInterpreter implements Runnable {
 
     private Fetcher fetcher;
-    private Validator validator;
+    private SyntaxValidator validator;
     private Tokenizer tokenizer;
     private Executor executor;
 
@@ -43,7 +43,17 @@ public class GraphInterpreter implements Runnable {
                     ValidatorResult validation = validator.validate(tokenization);
                     if (validation.isSuccessful()) {
                         ExecutorResult execution = executor.execute(validation);
-                        System.out.println(execution);
+
+                        if (execution.getQuit()) {
+                            stopped = true;
+                        }
+
+                        if (!execution.isSuccessful()) {
+                            System.out.println("Execution failed.");
+                        }
+
+                    } else {
+                        System.out.println("Not a valid command.");
                     }
                 }
             }

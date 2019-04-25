@@ -30,6 +30,10 @@ public class ExecutorResult {
         return this;
     }
 
+    public boolean isSuccessful() {
+        return result.equals(Result.SUCCESSFUL);
+    }
+
     private ExecutorResult add(boolean val) {
         quit = val;
         return this;

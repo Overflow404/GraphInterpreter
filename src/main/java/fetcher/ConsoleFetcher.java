@@ -2,7 +2,7 @@ package fetcher;
 
 import java.util.Scanner;
 
-import static results.Utils.EMPTY_COMMAND;
+import static Utils.Utils.EMPTY_COMMAND;
 
 public class ConsoleFetcher implements Fetcher {
 

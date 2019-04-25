@@ -6,11 +6,9 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.Viewer;
 import tokenizer.Token;
-import validator.ValidatorResult;
+import syntaxvalidator.ValidatorResult;
 
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,10 +16,12 @@ public class SimpleExecutor implements Executor {
 
     private Map<String, Graph> graphs;
     private ExecutorService displayExecutor;
+    private List<Displayer> displayers;
 
     public SimpleExecutor() {
         graphs = new Hashtable<>();
         displayExecutor = Executors.newCachedThreadPool();
+        displayers = new ArrayList<>();
     }
 
     @Override
@@ -56,6 +56,15 @@ public class SimpleExecutor implements Executor {
             case DISPLAY: {
                 return executeDisplay(tokens);
             }
+            case NEIGHBOURS: {
+                return executeNeighbours(tokens);
+            }
+            case BFS: {
+                return executeBfs(tokens);
+            }
+            case DFS: {
+                return executeDfs(tokens);
+            }
             case HELP: {
                 return executeHelp();
             }
@@ -67,19 +76,80 @@ public class SimpleExecutor implements Executor {
         }
     }
 
+    private ExecutorResult executeDfs(List<Token> tokens) {
+        String graphId = tokens.get(1).getTokenString();
+        String node = tokens.get(2).getTokenString();
+
+        if (graphs.containsKey(graphId)) {
+            Graph graph = graphs.get(graphId);
+            Iterator iterator = graph.getNode(node).getDepthFirstIterator();
+
+            while(iterator.hasNext()) {
+                System.out.print(iterator.next().toString() + " ");
+            }
+            System.out.println();
+            return ExecutorResult.createSuccessfulResult();
+        }
+
+        return ExecutorResult.createUnsuccessfulResult();
+    }
+
+    private ExecutorResult executeBfs(List<Token> tokens) {
+        String graphId = tokens.get(1).getTokenString();
+        String node = tokens.get(2).getTokenString();
+
+        if (graphs.containsKey(graphId)) {
+            Graph graph = graphs.get(graphId);
+            Iterator iterator = graph.getNode(node).getBreadthFirstIterator();
+
+            while(iterator.hasNext()) {
+                System.out.print(iterator.next().toString() + " ");
+            }
+            System.out.println();
+            return ExecutorResult.createSuccessfulResult();
+        }
+
+        return ExecutorResult.createUnsuccessfulResult();
+    }
+
+    private ExecutorResult executeNeighbours(List<Token> tokens) {
+        String graphId = tokens.get(1).getTokenString();
+        String node = tokens.get(2).getTokenString();
+
+        if (graphs.containsKey(graphId)) {
+            Graph graph = graphs.get(graphId);
+            Iterator iterator = graph.getNode(node).getNeighborNodeIterator();
+
+            while(iterator.hasNext()) {
+                System.out.print(iterator.next().toString() + " ");
+            }
+            System.out.println();
+            return ExecutorResult.createSuccessfulResult();
+        }
+
+        return ExecutorResult.createUnsuccessfulResult();
+    }
+
     private ExecutorResult executeQuit() {
-        displayExecutor.shutdownNow();
+        for (Displayer displayer: displayers) {
+            displayer.stop();
+        }
+        displayExecutor.shutdown();
         return ExecutorResult.createQuitResult();
     }
 
     private ExecutorResult executeHelp() {
-        System.out.println("new_graph [graph_id]");
-        System.out.println("add_node [graph_id] [node_id]");
-        System.out.println("remove_node [graph_id] [node_id]");
-        System.out.println("add_edge [graph_id] [edge_id] [first_node_id] [second_node_id]");
-        System.out.println("remove_edge [graph_id] [edge_id]");
-        System.out.println("display [graph_id]");
-        System.out.println("quit(to do)");
+        System.out.println("\tnew_graph [graph_id]");
+        System.out.println("\tadd_node [graph_id] [node_id]");
+        System.out.println("\tremove_node [graph_id] [node_id]");
+        System.out.println("\tadd_edge [graph_id] [edge_id] [first_node_id] [second_node_id]");
+        System.out.println("\tremove_edge [graph_id] [edge_id]");
+        System.out.println("\tneighbours [graph_id] [node_id]");
+        System.out.println("\tbfs [graph_id] [source_node_id]");
+        System.out.println("\tdfs [graph_id] [source_node_id]");
+        System.out.println("\tdisplay [graph_id]");
+        System.out.println("\thelp");
+        System.out.println("\tquit");
         return ExecutorResult.createSuccessfulResult();
     }
 
@@ -119,6 +189,7 @@ public class SimpleExecutor implements Executor {
 
             Viewer viewer = new Viewer(toDisplay, Viewer.ThreadingModel.GRAPH_IN_SWING_THREAD);
             Displayer displayer = new Displayer(viewer);
+            displayers.add(displayer);
             displayExecutor.execute(displayer);
             return ExecutorResult.createSuccessfulResult();
         }

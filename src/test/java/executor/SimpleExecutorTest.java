@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tokenizer.Token;
-import validator.ValidatorResult;
+import syntaxvalidator.ValidatorResult;
 
 import java.util.ArrayList;
 import java.util.List;

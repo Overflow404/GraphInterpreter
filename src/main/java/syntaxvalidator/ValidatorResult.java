@@ -1,4 +1,4 @@
-package validator;
+package syntaxvalidator;
 
 import results.Result;
 import tokenizer.Token;
