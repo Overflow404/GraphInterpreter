@@ -9,12 +9,12 @@ public class SimpleTokenizer implements Tokenizer {
 
     @Override
     public TokenizerResult tokenize(FetchResult result) {
-        String content = result.getContent();
-        List<Token> tokens = tokenizeInstruction(content);
-        return TokenizerResult.createSuccessfulTokenizationResult(tokens);
+        String command = result.getCommand();
+        List<Token> tokens = tokenizeCommand(command);
+        return TokenizerResult.createSuccessfulResult(tokens);
     }
 
-    private List<Token> tokenizeInstruction(String instruction) {
+    private List<Token> tokenizeCommand(String instruction) {
         List<Token> tokens = new ArrayList<>();
         String[] stringTokens = instruction.split("\\s+");
 

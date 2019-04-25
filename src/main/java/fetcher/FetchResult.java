@@ -6,32 +6,32 @@ import java.util.Objects;
 
 public class FetchResult {
 
-    private static final String EMPTY_STRING = "";
     private Result result;
-    private String content;
+    private String command;
 
-    public static  FetchResult createSuccessFetchResult(String content) {
-        return new FetchResult().addContent(content).addResult(Result.SUCCESSFUL);
+    private FetchResult() {
     }
 
-    public static FetchResult createUnsuccessfulFetchResult() {
-        return new FetchResult().addContent(EMPTY_STRING).addResult(Result.UNSUCCESSFUL);
+    public static FetchResult createSuccessResult(String command) {
+        return new FetchResult().add(command.toUpperCase()).add(Result.SUCCESSFUL);
     }
 
-    private FetchResult() {}
+    public static FetchResult createUnsuccessfulResult(String reason) {
+        return new FetchResult().add(reason.toUpperCase()).add(Result.UNSUCCESSFUL);
+    }
 
-    private FetchResult addResult(Result result) {
+    private FetchResult add(Result result) {
         this.result = result;
         return this;
     }
 
-    private FetchResult addContent(String content) {
-        this.content = content;
+    private FetchResult add(String content) {
+        this.command = content;
         return this;
     }
 
-    public String getContent() {
-        return content;
+    public String getCommand() {
+        return command;
     }
 
     public boolean isSuccessful() {
@@ -44,19 +44,19 @@ public class FetchResult {
         if (o == null || getClass() != o.getClass()) return false;
         FetchResult that = (FetchResult) o;
         return result == that.result &&
-                Objects.equals(content, that.content);
+                Objects.equals(command, that.command);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result, content);
+        return Objects.hash(result, command);
     }
 
     @Override
     public String toString() {
         return "FetchResult{" +
                 "result=" + result +
-                ", content='" + content + '\'' +
+                ", command='" + command + '\'' +
                 '}';
     }
 }

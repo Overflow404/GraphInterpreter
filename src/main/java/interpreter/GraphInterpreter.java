@@ -1,5 +1,8 @@
 package interpreter;
 
+import executor.Executor;
+import executor.ExecutorResult;
+import executor.SimpleExecutor;
 import fetcher.ConsoleFetcher;
 import fetcher.FetchResult;
 import fetcher.Fetcher;
@@ -15,6 +18,7 @@ public class GraphInterpreter implements Runnable {
     private Fetcher fetcher;
     private Validator validator;
     private Tokenizer tokenizer;
+    private Executor executor;
 
     private boolean stopped = false;
 
@@ -22,6 +26,7 @@ public class GraphInterpreter implements Runnable {
         fetcher = new ConsoleFetcher();
         validator = new GraphValidator();
         tokenizer = new SimpleTokenizer();
+        executor = new SimpleExecutor();
     }
 
     public static void main(String[] args) {
@@ -31,22 +36,18 @@ public class GraphInterpreter implements Runnable {
 
     public void run() {
         while (!stopped) {
-            FetchResult fetchingResult = fetcher.fetch();
-            if (fetchingResult.isSuccessful()) {
-                TokenizerResult tokenizationResult = tokenizer.tokenize(fetchingResult);
-                if (tokenizationResult.isSuccessful()) {
-                    ValidatorResult validationResult = validator.validate(tokenizationResult);
-                    System.out.println(validationResult);
+            FetchResult fetching = fetcher.fetch();
+            if (fetching.isSuccessful()) {
+                TokenizerResult tokenization = tokenizer.tokenize(fetching);
+                if (tokenization.isSuccessful()) {
+                    ValidatorResult validation = validator.validate(tokenization);
+                    if (validation.isSuccessful()) {
+                        ExecutorResult execution = executor.execute(validation);
+                        System.out.println(execution);
+                    }
                 }
-                //validator.validate(fetchingResult);
-                //System.out.println(result);
-                //execut1e();
             }
         }
-    }
-
-    public void stop() {
-        stopped = true;
     }
 
 }

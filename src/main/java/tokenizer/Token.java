@@ -7,11 +7,10 @@ public class Token {
     private String token;
 
     public Token(String token) {
-        this.token = token;
-
+        this.token = token.toUpperCase();
     }
 
-    public String getToken() {
+    public String getTokenString() {
         return token;
     }
 
@@ -22,7 +21,6 @@ public class Token {
         Token token1 = (Token) o;
         return Objects.equals(token, token1.token);
     }
-
 
     @Override
     public int hashCode() {

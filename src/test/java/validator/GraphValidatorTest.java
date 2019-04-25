@@ -1,15 +1,11 @@
 package validator;
 
-import fetcher.ConsoleFetcher;
-import fetcher.FetchResult;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tokenizer.Token;
 import tokenizer.TokenizerResult;
 
-import java.io.ByteArrayInputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,22 +19,49 @@ public class GraphValidatorTest {
     }
 
     @Test
-    public void successfulValidationTest() {
+    public void successfulNodeValidationTest() {
         List<Token> tokens = new ArrayList<>();
-        tokens.add(new Token("add_edGE"));
+        tokens.add(new Token("adD_nOdE"));
+        tokens.add(new Token("A"));
 
-        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulTokenizationResult(tokens);
+        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulResult(tokens);
 
         ValidatorResult validationResult = validator.validate(tokenizationResult);
         Assert.assertTrue(validationResult.isSuccessful());
     }
 
     @Test
-    public void unsuccessfulValidationTest() {
+    public void unsuccessfulNodeValidationTest() {
         List<Token> tokens = new ArrayList<>();
-        tokens.add(new Token("add_1node"));
+        tokens.add(new Token("adD_nOdE"));
 
-        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulTokenizationResult(tokens);
+        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulResult(tokens);
+
+        ValidatorResult validationResult = validator.validate(tokenizationResult);
+        Assert.assertFalse(validationResult.isSuccessful());
+    }
+
+    @Test
+    public void successfulEdgeValidationTest() {
+        List<Token> tokens = new ArrayList<>();
+        tokens.add(new Token("adD_eDGE"));
+        tokens.add(new Token("A"));
+        tokens.add(new Token("B"));
+
+
+        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulResult(tokens);
+
+        ValidatorResult validationResult = validator.validate(tokenizationResult);
+        Assert.assertTrue(validationResult.isSuccessful());
+    }
+
+    @Test
+    public void unsuccessfulEdgeValidationTest() {
+        List<Token> tokens = new ArrayList<>();
+        tokens.add(new Token("adD_eDGE"));
+        tokens.add(new Token("A"));
+
+        TokenizerResult tokenizationResult = TokenizerResult.createSuccessfulResult(tokens);
 
         ValidatorResult validationResult = validator.validate(tokenizationResult);
         Assert.assertFalse(validationResult.isSuccessful());

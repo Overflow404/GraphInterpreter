@@ -1,8 +1,6 @@
 package tokenizer;
 
 import results.Result;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TokenizerResult {
@@ -10,16 +8,16 @@ public class TokenizerResult {
     private List<Token> tokens;
     private Result result;
 
-    public static  TokenizerResult createSuccessfulTokenizationResult(List<Token> tokens) {
-        return new TokenizerResult().addTokens(tokens).addResult(Result.SUCCESSFUL);
+    public static  TokenizerResult createSuccessfulResult(List<Token> tokens) {
+        return new TokenizerResult().add(tokens).add(Result.SUCCESSFUL);
     }
 
-    private TokenizerResult addTokens(List<Token> tokens) {
+    private TokenizerResult add(List<Token> tokens) {
         this.tokens = tokens;
         return this;
     }
 
-    private TokenizerResult addResult(Result result) {
+    private TokenizerResult add(Result result) {
         this.result = result;
         return this;
     }
@@ -32,8 +30,10 @@ public class TokenizerResult {
         return tokens;
     }
 
-    public Token getOperation() {
-        return tokens.get(0);
+    public String getOperation() {
+        if (tokens == null || tokens.size() < 1)
+            throw new IllegalStateException("No operation found.");
+        return tokens.get(0).getTokenString().toUpperCase();
     }
 
     @Override

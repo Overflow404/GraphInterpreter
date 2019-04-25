@@ -1,9 +1,11 @@
 package fetcher;
 
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import static results.Utils.EMPTY_COMMAND;
+
 public class ConsoleFetcher implements Fetcher {
+
     private Scanner scanner;
 
     public ConsoleFetcher() {
@@ -13,15 +15,15 @@ public class ConsoleFetcher implements Fetcher {
     @Override
     public FetchResult fetch() {
         try {
-            String content = scanner.nextLine();
+            String command = scanner.nextLine();
 
-            if (content.isBlank()) {
-                return FetchResult.createUnsuccessfulFetchResult();
+            if (command.isBlank()) {
+                return FetchResult.createUnsuccessfulResult(EMPTY_COMMAND);
             }
 
-            return FetchResult.createSuccessFetchResult(content);
-        } catch (NoSuchElementException e) {
-            return FetchResult.createUnsuccessfulFetchResult();
+            return FetchResult.createSuccessResult(command.toUpperCase());
+        } catch (Exception e) {
+            return FetchResult.createUnsuccessfulResult(e.getMessage());
         }
     }
 

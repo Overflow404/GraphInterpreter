@@ -18,7 +18,7 @@ public class SimpleTokenizerTest {
 
     @Test
     public void successfulTokenizationTest() {
-        FetchResult fetchingResult = FetchResult.createSuccessFetchResult("test content");
+        FetchResult fetchingResult = FetchResult.createSuccessResult("test content");
 
         TokenizerResult tokenizationResult = tokenizer.tokenize(fetchingResult);
         List<Token> tokens = tokenizationResult.getTokens();

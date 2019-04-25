@@ -5,12 +5,15 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 
+import static results.Utils.EMPTY_COMMAND;
+
 public class ConsoleFetcherTest {
 
     @Test
     public void successfulFetchTest() {
         String toRead = "Hello, World!";
-        FetchResult actual = FetchResult.createSuccessFetchResult(toRead);
+
+        FetchResult actual = FetchResult.createSuccessResult(toRead);
         System.setIn(new ByteArrayInputStream(toRead.getBytes()));
 
         ConsoleFetcher fetcher = new ConsoleFetcher();
@@ -21,7 +24,7 @@ public class ConsoleFetcherTest {
 
     @Test
     public void unsuccessfulFetchTest() {
-        FetchResult actual = FetchResult.createUnsuccessfulFetchResult();
+        FetchResult actual = FetchResult.createUnsuccessfulResult(EMPTY_COMMAND);
         System.setIn(new ByteArrayInputStream(" ".getBytes()));
 
         ConsoleFetcher fetcher = new ConsoleFetcher();

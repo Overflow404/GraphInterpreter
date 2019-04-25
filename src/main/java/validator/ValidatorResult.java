@@ -5,6 +5,7 @@ import tokenizer.Token;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ValidatorResult {
 
@@ -14,11 +15,11 @@ public class ValidatorResult {
 
     private ValidatorResult() {}
 
-    public static ValidatorResult createSuccessfulValidationResult(List<Token> tokens) {
+    public static ValidatorResult createSuccessfulResult(List<Token> tokens) {
         return new ValidatorResult().addTokens(tokens).addResult(Result.SUCCESSFUL);
     }
 
-    public static ValidatorResult createUnsuccessfulValidationResult() {
+    public static ValidatorResult createUnsuccessfulResult() {
         return new ValidatorResult().addTokens(EMPTY_LIST).addResult(Result.UNSUCCESSFUL);
     }
 
@@ -32,8 +33,18 @@ public class ValidatorResult {
         return this;
     }
 
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
     public boolean isSuccessful() {
         return result == Result.SUCCESSFUL;
+    }
+
+    public String getOperation() {
+        if (tokens == null || tokens.size() < 1)
+            throw new IllegalStateException("No operation found.");
+        return tokens.get(0).getTokenString().toUpperCase();
     }
 
     @Override
@@ -42,5 +53,19 @@ public class ValidatorResult {
                 "result=" + result +
                 ", tokens=" + tokens +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ValidatorResult that = (ValidatorResult) o;
+        return result == that.result &&
+                Objects.equals(tokens, that.tokens);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result, tokens);
     }
 }
