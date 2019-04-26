@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 
-import static Utils.Utils.EMPTY_COMMAND;
+import static interpreter.Constant.ERROR_EMPTY_COMMAND;
 
 public class ConsoleFetcherTest {
 
@@ -24,7 +24,7 @@ public class ConsoleFetcherTest {
 
     @Test
     public void unsuccessfulFetchTest() {
-        FetchResult actual = FetchResult.createUnsuccessfulResult(EMPTY_COMMAND);
+        FetchResult actual = FetchResult.createUnsuccessfulResult(ERROR_EMPTY_COMMAND);
         System.setIn(new ByteArrayInputStream(" ".getBytes()));
 
         ConsoleFetcher fetcher = new ConsoleFetcher();

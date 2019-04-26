@@ -1,32 +1,29 @@
 package interpreter;
 
-import executor.Executor;
-import executor.ExecutorResult;
-import executor.SimpleExecutor;
+import command.Command;
+import command.CommandExecutor;
+import command.CommandParser;
 import fetcher.ConsoleFetcher;
 import fetcher.FetchResult;
 import fetcher.Fetcher;
-import tokenizer.SimpleTokenizer;
+import tokenizer.SpaceTokenizer;
 import tokenizer.Tokenizer;
 import tokenizer.TokenizerResult;
-import syntaxvalidator.GraphValidator;
-import syntaxvalidator.SyntaxValidator;
-import syntaxvalidator.ValidatorResult;
 
-public class GraphInterpreter implements Runnable {
+public class GraphInterpreter {
 
     private Fetcher fetcher;
-    private SyntaxValidator validator;
     private Tokenizer tokenizer;
-    private Executor executor;
+    private CommandParser parser;
+    private CommandExecutor executor;
 
     private boolean stopped = false;
 
-    public GraphInterpreter() {
+    private GraphInterpreter() {
         fetcher = new ConsoleFetcher();
-        validator = new GraphValidator();
-        tokenizer = new SimpleTokenizer();
-        executor = new SimpleExecutor();
+        tokenizer = new SpaceTokenizer();
+        parser = new CommandParser();
+        executor = new CommandExecutor();
     }
 
     public static void main(String[] args) {
@@ -34,27 +31,20 @@ public class GraphInterpreter implements Runnable {
         graphInterpreter.run();
     }
 
-    public void run() {
+    private void run() {
         while (!stopped) {
             FetchResult fetching = fetcher.fetch();
             if (fetching.isSuccessful()) {
-                TokenizerResult tokenization = tokenizer.tokenize(fetching);
+                TokenizerResult tokenization = this.tokenizer.tokenize(fetching);
                 if (tokenization.isSuccessful()) {
-                    ValidatorResult validation = validator.validate(tokenization);
-                    if (validation.isSuccessful()) {
-                        ExecutorResult execution = executor.execute(validation);
-
-                        if (execution.getQuit()) {
-                            stopped = true;
-                        }
-
-                        if (!execution.isSuccessful()) {
-                            System.out.println("Execution failed.");
-                        }
-
-                    } else {
-                        System.out.println("Not a valid command.");
+                    try {
+                        Command command = parser.parse(tokenization.getTokens());
+                        executor.execute(command);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
+
+
                 }
             }
         }

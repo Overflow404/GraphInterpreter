@@ -9,11 +9,11 @@ import java.util.List;
 
 public class SimpleTokenizerTest {
 
-    private SimpleTokenizer tokenizer;
+    private SpaceTokenizer tokenizer;
 
     @Before
     public void setup() {
-        tokenizer = new SimpleTokenizer();
+        tokenizer = new SpaceTokenizer();
     }
 
     @Test
@@ -21,10 +21,10 @@ public class SimpleTokenizerTest {
         FetchResult fetchingResult = FetchResult.createSuccessResult("test content");
 
         TokenizerResult tokenizationResult = tokenizer.tokenize(fetchingResult);
-        List<Token> tokens = tokenizationResult.getTokens();
+        List<String> tokens = tokenizationResult.getTokens();
 
-        Token token1 = new Token("test");
-        Token token2 = new Token("content");
+        String token1 = "test";
+        String token2 = "content";
 
         Assert.assertTrue(tokens.contains(token1));
         Assert.assertTrue(tokens.contains(token2));

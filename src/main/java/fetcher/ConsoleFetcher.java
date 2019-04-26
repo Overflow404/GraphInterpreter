@@ -2,7 +2,7 @@ package fetcher;
 
 import java.util.Scanner;
 
-import static Utils.Utils.EMPTY_COMMAND;
+import static interpreter.Constant.ERROR_EMPTY_COMMAND;
 
 public class ConsoleFetcher implements Fetcher {
 
@@ -18,10 +18,10 @@ public class ConsoleFetcher implements Fetcher {
             String command = scanner.nextLine();
 
             if (command.isBlank()) {
-                return FetchResult.createUnsuccessfulResult(EMPTY_COMMAND);
+                return FetchResult.createUnsuccessfulResult(ERROR_EMPTY_COMMAND);
             }
 
-            return FetchResult.createSuccessResult(command.toUpperCase());
+            return FetchResult.createSuccessResult(command);
         } catch (Exception e) {
             return FetchResult.createUnsuccessfulResult(e.getMessage());
         }

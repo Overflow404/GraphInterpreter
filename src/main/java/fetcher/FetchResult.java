@@ -1,6 +1,6 @@
 package fetcher;
 
-import results.Result;
+import interpreter.Result;
 
 import java.util.Objects;
 
@@ -13,11 +13,11 @@ public class FetchResult {
     }
 
     public static FetchResult createSuccessResult(String command) {
-        return new FetchResult().add(command.toUpperCase()).add(Result.SUCCESSFUL);
+        return new FetchResult().add(command).add(Result.SUCCESSFUL);
     }
 
     public static FetchResult createUnsuccessfulResult(String reason) {
-        return new FetchResult().add(reason.toUpperCase()).add(Result.UNSUCCESSFUL);
+        return new FetchResult().add(reason).add(Result.UNSUCCESSFUL);
     }
 
     private FetchResult add(Result result) {
