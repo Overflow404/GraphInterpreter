@@ -39,6 +39,8 @@ public class ExecutionContext {
 
     public void addNode(String graphName, String nodeName) {
         graphs.get(graphName).addNode(nodeName);
+        Node addedNode = graphs.get(graphName).getNode(nodeName);
+        addedNode.addAttribute("ui.label", addedNode.getId());
     }
 
     public void deleteNode(String graphName, String nodeName) {
@@ -63,11 +65,6 @@ public class ExecutionContext {
 
     public void display(String graphName) {
         Graph toDisplay = graphs.get(graphName);
-
-        for (Node node : toDisplay) {
-            node.addAttribute("ui.label", node.getId());
-        }
-
         Viewer viewer = new Viewer(toDisplay, Viewer.ThreadingModel.GRAPH_IN_SWING_THREAD);
         DisplayThread thread = new DisplayThread(viewer);
         threads.add(thread);

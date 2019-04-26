@@ -2,11 +2,9 @@ package command.display;
 
 import command.ExecutionContext;
 import command.Mock;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.GRAPH_NAME;
 import static command.Mock.INEXISTENT_GRAPH_NAME;
 
 public class DisplayCommandTest {
