@@ -18,6 +18,8 @@ public class AddNodeCommandFactory implements CommandFactory {
         if (tokens.size() != ADD_NODE_COMMAND_LENGTH) {
             throw new IllegalStateException("Invalid add_node syntax.");
         }
-        return new AddNodeCommand(tokens.get(1), tokens.get(2));
+		String graphName = tokens.get(1);
+		String nodeName = tokens.get(2);
+		return new AddNodeCommand(graphName, nodeName);
     }
 }

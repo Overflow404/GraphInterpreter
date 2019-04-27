@@ -1,8 +1,9 @@
 package command.addnode;
 
-
 import command.Command;
 import command.ExecutionContext;
+import graph.Graph;
+import graph.GraphStorage;
 
 public class AddNodeCommand implements Command {
 
@@ -15,14 +16,16 @@ public class AddNodeCommand implements Command {
     }
 
     @Override
-    public void execute(ExecutionContext context) {
-        try {
-            context.addNode(graphName, nodeName);
-            System.out.println("Successfully executed add_node.");
-        } catch (Exception e) {
-            System.out.println("Graph doesn't exist or node already exist.");
-        }
-    }
-
+	public void execute(ExecutionContext context) {
+		GraphStorage storage = context.getStorage();
+		if (!storage.exists(graphName)) {
+			throw new IllegalStateException("Graph " + graphName + " does not exist!");
+		}
+		Graph graph = storage.get(graphName);
+		if (graph.containsNode(nodeName)) {
+			throw new IllegalStateException("Node " + nodeName + " already exists!");
+		}
+		graph.addNode(nodeName);
+	}
 
 }

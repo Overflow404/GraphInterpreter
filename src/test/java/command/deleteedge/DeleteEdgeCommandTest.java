@@ -1,33 +1,47 @@
 package command.deleteedge;
 
 import command.ExecutionContext;
-import command.Mock;
+import graph.Graph;
+import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.*;
+import static command.Constants.*;
 
 public class DeleteEdgeCommandTest {
-
-    private Mock mock;
+    private Graph graph;
     private ExecutionContext context;
 
     @Before
     public void setup() {
-        mock = new Mock();
-        context = mock.getContext();
+        context = new ExecutionContext();
+        GraphStorage storage = context.getStorage();
+        graph = storage.add(GRAPH_NAME);
+        graph.addNode(SOURCE_NODE);
+        graph.addNode(DESTINATION_NODE);
+        graph.addEdge(EDGE, SOURCE_NODE, DESTINATION_NODE);
 
-        mock.createGraph(GRAPH_NAME);
-        mock.createNode(GRAPH_NAME, SOURCE_NODE);
-        mock.createNode(GRAPH_NAME, DESTINATION_NODE);
-        mock.createEdge(GRAPH_NAME, EDGE_NAME, SOURCE_NODE, DESTINATION_NODE);
     }
 
     @Test
     public void successfulCommandDeleteNodeTest() {
-        Assert.assertTrue(context.containsEdge(GRAPH_NAME, EDGE_NAME));
-        mock.deleteEdge(GRAPH_NAME, EDGE_NAME);
-        Assert.assertFalse(context.containsEdge(GRAPH_NAME, EDGE_NAME));
+        DeleteEdgeCommand command = new DeleteEdgeCommand(GRAPH_NAME, EDGE);
+        command.execute(context);
+        boolean graphHasNotEdge = !graph.containsEdge(EDGE);
+        Assert.assertTrue(graphHasNotEdge);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void commandDeleteEdgeOnInexistentGraphTest() {
+        DeleteEdgeCommand command = new DeleteEdgeCommand(INEXISTENT_GRAPH, EDGE);
+        command.execute(context);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void commandDeleteEdgeWithEdgeThatNotExistTest() {
+        DeleteEdgeCommand command = new DeleteEdgeCommand(GRAPH_NAME, EDGE);
+        command.execute(context);
+        command.execute(context);
     }
 }

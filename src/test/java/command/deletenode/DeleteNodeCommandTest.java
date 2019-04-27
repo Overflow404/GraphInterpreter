@@ -1,29 +1,44 @@
 package command.deletenode;
 
-import command.*;
+import command.ExecutionContext;
+import graph.Graph;
+import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.GRAPH_NAME;
-import static command.Mock.NODE_NAME;
+import static command.Constants.*;
 
 public class DeleteNodeCommandTest {
 
-    private Mock mock;
     private ExecutionContext context;
+	private Graph graph;
 
     @Before
     public void setup() {
-        mock = new Mock();
-        context = mock.getContext();
-        mock.createGraph(GRAPH_NAME);
-        mock.createNode(GRAPH_NAME, NODE_NAME);
+		context = new ExecutionContext();
+		GraphStorage storage = context.getStorage();
+		graph = storage.add(GRAPH_NAME);
+		graph.addNode(NODE);
     }
 
     @Test
     public void successfulCommandDeleteNodeTest() {
-        mock.deleteNode(GRAPH_NAME, NODE_NAME);
-        Assert.assertFalse(context.containsNode(GRAPH_NAME, NODE_NAME));
+		DeleteNodeCommand command = new DeleteNodeCommand(GRAPH_NAME, NODE);
+		command.execute(context);
+		boolean nodeRemoved = (!graph.containsNode(NODE));
+		Assert.assertTrue(nodeRemoved);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void commandDeleteNodeOnInexistentGraphTest() {
+		DeleteNodeCommand command = new DeleteNodeCommand(INEXISTENT_GRAPH, NODE);
+		command.execute(context);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void commandDeleteNodeOnInexistentNodeTest() {
+		DeleteNodeCommand command = new DeleteNodeCommand(GRAPH_NAME, INEXISTENT_NODE);
+		command.execute(context);
     }
 }

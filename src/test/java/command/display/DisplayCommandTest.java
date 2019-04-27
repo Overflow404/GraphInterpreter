@@ -1,25 +1,25 @@
 package command.display;
 
 import command.ExecutionContext;
-import command.Mock;
+import graph.GraphStorage;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.INEXISTENT_GRAPH_NAME;
+import static command.Constants.GRAPH_NAME;
+import static command.Constants.INEXISTENT_GRAPH;
 
 public class DisplayCommandTest {
 
-    private Mock mock;
     private ExecutionContext context;
-
     @Before
     public void setup() {
-        mock = new Mock();
-        context = mock.getContext();
+		context = new ExecutionContext();
+		GraphStorage storage = context.getStorage();
+		storage.add(GRAPH_NAME);
     }
 
-    @Test
+	@Test(expected = IllegalStateException.class)
     public void unsuccessfulCommandDisplayTest() {
-        mock.display(INEXISTENT_GRAPH_NAME);
+		new DisplayCommand(INEXISTENT_GRAPH).execute(context);
     }
 }

@@ -2,6 +2,8 @@ package command.addedge;
 
 import command.Command;
 import command.ExecutionContext;
+import graph.Graph;
+import graph.GraphStorage;
 
 public class AddEdgeCommand implements Command {
 
@@ -10,7 +12,7 @@ public class AddEdgeCommand implements Command {
     private String sourceNode;
     private String destinationNode;
 
-    public AddEdgeCommand(String graphName, String edgeName, String sourceNode, String destinationNode) {
+    AddEdgeCommand(String graphName, String edgeName, String sourceNode, String destinationNode) {
         this.graphName = graphName;
         this.edgeName = edgeName;
         this.sourceNode = sourceNode;
@@ -19,11 +21,20 @@ public class AddEdgeCommand implements Command {
 
     @Override
     public void execute(ExecutionContext context) {
-        try {
-            context.addEdge(graphName, edgeName, sourceNode, destinationNode);
-            System.out.println("Successfully executed add_edge.");
-        } catch (Exception e) {
-            System.out.println("Graph or nodes doesn't exist or edge already exist.");
+        GraphStorage storage = context.getStorage();
+        if (!storage.exists(graphName)) {
+            throw new IllegalStateException("Graph " + graphName + " does not exists!");
         }
+        Graph graph = storage.get(graphName);
+        if (!graph.containsNode(sourceNode)) {
+            throw new IllegalStateException("Node " + sourceNode + " does not exists!");
+        }
+        if (!graph.containsNode(destinationNode)) {
+            throw new IllegalStateException("Node " + destinationNode + " does not exists!");
+        }
+        if (graph.containsEdge(edgeName)) {
+            throw new IllegalStateException("Edge " + edgeName + " in graph " + graphName + " already exists!");
+        }
+        graph.addEdge(edgeName, sourceNode, destinationNode);
     }
 }

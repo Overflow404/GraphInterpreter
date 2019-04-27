@@ -2,6 +2,9 @@ package command.display;
 
 import command.Command;
 import command.ExecutionContext;
+import display.DisplayManager;
+import graph.Graph;
+import graph.GraphStorage;
 
 public class DisplayCommand implements Command {
 
@@ -13,11 +16,13 @@ public class DisplayCommand implements Command {
 
     @Override
     public void execute(ExecutionContext context) {
-        try {
-            context.display(graphName);
-            System.out.println("Successfully executed display.");
-        } catch (Exception e) {
-            System.out.println("Graph doesn't exist.");
+		GraphStorage storage = context.getStorage();
+		if (!storage.exists(graphName)) {
+			throw new IllegalStateException("Graph " + graphName + " does not exist!");
         }
+		Graph graph = storage.get(graphName);
+		DisplayManager displayManager = context.getDisplayManager();
+		displayManager.display(graph);
+
     }
 }

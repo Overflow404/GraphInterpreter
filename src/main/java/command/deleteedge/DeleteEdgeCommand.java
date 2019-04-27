@@ -2,6 +2,8 @@ package command.deleteedge;
 
 import command.Command;
 import command.ExecutionContext;
+import graph.Graph;
+import graph.GraphStorage;
 
 public class DeleteEdgeCommand implements Command {
 
@@ -15,11 +17,14 @@ public class DeleteEdgeCommand implements Command {
 
     @Override
     public void execute(ExecutionContext context) {
-        try {
-            context.deleteEdge(graphName, edgeName);
-            System.out.println("Successfully executed delete_edge.");
-        } catch (Exception e) {
-            System.out.println("Graph or edge doesn't exist.");
+		GraphStorage storage = context.getStorage();
+		if (!storage.exists(graphName)) {
+			throw new IllegalStateException("Graph " + graphName + " does not exist!");
         }
+		Graph graph = storage.get(graphName);
+		if (!graph.containsEdge(edgeName)) {
+			throw new IllegalStateException("Edge " + edgeName + " does not exist!");
+		}
+		graph.deleteEdge(edgeName);
     }
 }

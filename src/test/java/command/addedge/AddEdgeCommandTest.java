@@ -1,32 +1,64 @@
 package command.addedge;
 
-import command.*;
+import command.ExecutionContext;
+import graph.Graph;
+import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.*;
+import static command.Constants.*;
 
 public class AddEdgeCommandTest {
-
-    private Mock mock;
+	private Graph graph;
     private ExecutionContext context;
+	private GraphStorage storage;
 
     @Before
     public void setup() {
-        mock = new Mock();
-        context = mock.getContext();
-
-        mock.createGraph(GRAPH_NAME);
-        mock.createNode(GRAPH_NAME, SOURCE_NODE);
-        mock.createNode(GRAPH_NAME, DESTINATION_NODE);
+		context = new ExecutionContext();
+		storage = context.getStorage();
+		graph = storage.add(GRAPH_NAME);
+		graph.addNode(SOURCE_NODE);
+		graph.addNode(DESTINATION_NODE);
     }
-
 
     @Test
     public void successfulCommandAddEdgeTest() {
-        mock.createEdge(GRAPH_NAME, EDGE_NAME, SOURCE_NODE, DESTINATION_NODE);
-        boolean graphHaveEdge = context.containsEdge(GRAPH_NAME, EDGE_NAME);
-        Assert.assertTrue(graphHaveEdge);
+		AddEdgeCommand command = new AddEdgeCommand(GRAPH_NAME, EDGE, SOURCE_NODE, DESTINATION_NODE);
+		command.execute(context);
+		boolean graphHasEdge = graph.containsEdge(EDGE);
+		Assert.assertTrue(graphHasEdge);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void commandAddEdgeOnInexistentGraphTest() {
+		AddEdgeCommand command = new AddEdgeCommand(
+				INEXISTENT_GRAPH, EDGE, SOURCE_NODE, DESTINATION_NODE);
+		command.execute(context);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void commandAddEdgeWithInexistentSourceNodeTest() {
+		AddEdgeCommand command = new AddEdgeCommand(
+				GRAPH_NAME, EDGE, INEXISTENT_SOURCE_NODE, DESTINATION_NODE);
+		command.execute(context);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void commandAddEdgeWithInexistentDestinationNodeTest() {
+		AddEdgeCommand command = new AddEdgeCommand(
+				GRAPH_NAME, EDGE, SOURCE_NODE, INEXISTENT_DESTINATION_NODE);
+		command.execute(context);
     }
+
+	@Test(expected = IllegalStateException.class)
+	public void commandAddEdgeWithEdgeThatAlreadyExistTest() {
+		AddEdgeCommand command = new AddEdgeCommand(
+				GRAPH_NAME, EDGE, SOURCE_NODE, DESTINATION_NODE);
+		command.execute(context);
+		command.execute(context);
+	}
+
+
 }

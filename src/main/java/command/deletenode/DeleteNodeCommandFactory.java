@@ -2,7 +2,6 @@ package command.deletenode;
 
 import command.Command;
 import command.CommandFactory;
-import command.addnode.AddNodeCommand;
 
 import java.util.List;
 
@@ -19,6 +18,8 @@ public class DeleteNodeCommandFactory implements CommandFactory {
         if (tokens.size() != DELETE_NODE_COMMAND_LENGTH) {
             throw new IllegalStateException("Invalid delete_node syntax.");
         }
-        return new DeleteNodeCommand(tokens.get(1), tokens.get(2));
+		String graphName = tokens.get(1);
+		String nodeName = tokens.get(2);
+		return new DeleteNodeCommand(graphName, nodeName);
     }
 }

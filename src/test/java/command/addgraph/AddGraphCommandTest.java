@@ -1,33 +1,36 @@
 package command.addgraph;
 
-import command.*;
+import command.Constants;
+import command.ExecutionContext;
+import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static command.Mock.GRAPH_NAME;
-
+import static command.Constants.GRAPH_NAME;
 
 public class AddGraphCommandTest {
 
-    private Mock mock;
     private ExecutionContext context;
 
     @Before
     public void setup() {
-        mock = new Mock();
-        context = mock.getContext();
+		context = new ExecutionContext();
     }
 
     @Test
     public void successfulCommandAddGraphTest() {
-        mock.createGraph(GRAPH_NAME);
-        Assert.assertTrue(context.containsGraph(GRAPH_NAME));
+		AddGraphCommand command = new AddGraphCommand(Constants.GRAPH_NAME);
+		command.execute(context);
+		GraphStorage storage = context.getStorage();
+		boolean graphWasAdded = storage.exists(GRAPH_NAME);
+		Assert.assertTrue(graphWasAdded);
     }
 
     @Test (expected = IllegalStateException.class)
-    public void duplicateCommandAddGraphTest() {
-        mock.createGraph(GRAPH_NAME);
-        mock.createGraph(GRAPH_NAME);
+	public void addDuplicateGraphTest() {
+		AddGraphCommand command = new AddGraphCommand(Constants.GRAPH_NAME);
+		command.execute(context);
+		command.execute(context);
     }
 }

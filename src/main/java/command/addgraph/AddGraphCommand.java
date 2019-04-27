@@ -2,7 +2,7 @@ package command.addgraph;
 
 import command.Command;
 import command.ExecutionContext;
-import org.graphstream.graph.implementations.SingleGraph;
+import graph.GraphStorage;
 
 public class AddGraphCommand implements Command {
 
@@ -14,10 +14,10 @@ public class AddGraphCommand implements Command {
 
     @Override
     public void execute(ExecutionContext context) {
-        if (context.containsGraph(graphName)) {
-            throw new IllegalStateException("Duplicate graph name are not allowed.");
+		GraphStorage storage = context.getStorage();
+		if (storage.exists(graphName)) {
+			throw new IllegalStateException("Graph " + graphName + " already exist!");
         }
-        context.put(graphName, new SingleGraph(graphName));
-        System.out.println("Successfully executed add_graph.");
+		storage.add(graphName);
     }
 }

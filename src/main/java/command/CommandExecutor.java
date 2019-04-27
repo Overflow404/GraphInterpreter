@@ -9,7 +9,12 @@ public class CommandExecutor {
     }
 
     public void execute(Command command) {
-        command.execute(context);
+		try {
+			command.execute(context);
+			System.out.println("Successful command!");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
     }
 

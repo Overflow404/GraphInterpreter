@@ -18,6 +18,7 @@ public class DisplayCommandFactory implements CommandFactory {
         if (tokens.size() != DISPLAY_COMMAND_LENGTH) {
             throw new IllegalStateException("Invalid display syntax.");
         }
-        return new DisplayCommand(tokens.get(1));
+		String graphName = tokens.get(1);
+		return new DisplayCommand(graphName);
     }
 }
