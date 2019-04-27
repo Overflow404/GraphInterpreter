@@ -2,6 +2,7 @@ package command.deletegraph;
 
 import command.Command;
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
 import graph.GraphStorage;
 
 public class DeleteGraphCommand implements Command {
@@ -16,7 +17,7 @@ public class DeleteGraphCommand implements Command {
     public void execute(ExecutionContext context) {
 		GraphStorage storage = context.getStorage();
 		if (!storage.exists(graphName)) {
-			throw new IllegalStateException("Graph " + graphName + " does not exist!");
+			throw new GraphNotFoundException("Graph " + graphName + " does not exist!");
         }
 		storage.remove(graphName);
     }

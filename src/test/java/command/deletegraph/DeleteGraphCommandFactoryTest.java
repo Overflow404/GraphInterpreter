@@ -1,5 +1,6 @@
 package command.deletegraph;
 
+import exception.InvalidSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class DeleteGraphCommandFactoryTest {
         factory.parse(tokens);
     }
 
-    @Test (expected = IllegalStateException.class)
+	@Test(expected = InvalidSyntaxException.class)
     public void unsuccessfulParseTest() {
         List<String> tokens = getDeleteGraphTokensWithExtra();
         factory.parse(tokens);

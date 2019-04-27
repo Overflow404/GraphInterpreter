@@ -1,6 +1,7 @@
 package command.display;
 
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
 import graph.GraphStorage;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class DisplayCommandTest {
 		storage.add(GRAPH_NAME);
     }
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = GraphNotFoundException.class)
     public void unsuccessfulCommandDisplayTest() {
 		new DisplayCommand(INEXISTENT_GRAPH).execute(context);
     }

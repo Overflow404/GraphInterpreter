@@ -2,11 +2,13 @@ package command.help;
 
 import command.Command;
 import command.CommandFactory;
+import exception.InvalidSyntaxException;
+
 import java.util.List;
 
-import static interpreter.Constant.HELP_COMMAND_LENGTH;
-
 public class HelpCommandFactory implements CommandFactory {
+	private final static int HELP_COMMAND_LENGTH = 1;
+
     @Override
     public boolean isSupported(String command) {
         return command.equals("help");
@@ -15,8 +17,8 @@ public class HelpCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != HELP_COMMAND_LENGTH) {
-            throw new IllegalStateException("Invalid help syntax.");
+			throw new InvalidSyntaxException("Invalid help syntax.");
         }
-        return new HelpCommand();
+		return new HelpCommand();
     }
 }

@@ -1,5 +1,6 @@
 package command.quit;
 
+import exception.InvalidSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class QuitCommandFactoryTest {
         return tokens;
     }
 
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = InvalidSyntaxException.class)
     public void unsuccessfulParseTest() {
         List<String> tokens = getQuitTokensWithExtra();
         factory.parse(tokens);

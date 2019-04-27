@@ -1,5 +1,6 @@
 package command.addnode;
 
+import exception.InvalidSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class AddNodeCommandFactoryTest {
         factory.parse(tokens);
     }
 
-    @Test (expected = IllegalStateException.class)
+	@Test(expected = InvalidSyntaxException.class)
     public void unsuccessfulParseTest() {
         List<String> tokens = getAddNodeTokensWithExtra();
         factory.parse(tokens);

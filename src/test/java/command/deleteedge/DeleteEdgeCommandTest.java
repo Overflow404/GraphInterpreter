@@ -1,6 +1,8 @@
 package command.deleteedge;
 
 import command.ExecutionContext;
+import exception.EdgeNotFoundException;
+import exception.GraphNotFoundException;
 import graph.Graph;
 import graph.GraphStorage;
 import org.junit.Assert;
@@ -32,13 +34,13 @@ public class DeleteEdgeCommandTest {
         Assert.assertTrue(graphHasNotEdge);
     }
 
-    @Test(expected = IllegalStateException.class)
+	@Test(expected = GraphNotFoundException.class)
     public void commandDeleteEdgeOnInexistentGraphTest() {
         DeleteEdgeCommand command = new DeleteEdgeCommand(INEXISTENT_GRAPH, EDGE);
         command.execute(context);
     }
 
-    @Test(expected = IllegalStateException.class)
+	@Test(expected = EdgeNotFoundException.class)
     public void commandDeleteEdgeWithEdgeThatNotExistTest() {
         DeleteEdgeCommand command = new DeleteEdgeCommand(GRAPH_NAME, EDGE);
         command.execute(context);

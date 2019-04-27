@@ -2,12 +2,13 @@ package command.deletegraph;
 
 import command.Command;
 import command.CommandFactory;
+import exception.InvalidSyntaxException;
 
 import java.util.List;
 
-import static interpreter.Constant.DELETE_GRAPH_COMMAND_LENGTH;
-
 public class DeleteGraphCommandFactory implements CommandFactory {
+	private final static int DELETE_GRAPH_COMMAND_LENGTH = 2;
+
     @Override
     public boolean isSupported(String command) {
         return command.equals("delete_graph");
@@ -16,8 +17,9 @@ public class DeleteGraphCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != DELETE_GRAPH_COMMAND_LENGTH) {
-            throw new IllegalStateException("Invalid delete_graph syntax.");
+			throw new InvalidSyntaxException("Invalid delete_graph syntax.");
         }
-        return new DeleteGraphCommand(tokens.get(1));
+		String graph = tokens.get(1);
+		return new DeleteGraphCommand(graph);
     }
 }

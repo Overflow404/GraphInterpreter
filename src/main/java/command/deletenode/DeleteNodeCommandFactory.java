@@ -2,12 +2,13 @@ package command.deletenode;
 
 import command.Command;
 import command.CommandFactory;
+import exception.InvalidSyntaxException;
 
 import java.util.List;
 
-import static interpreter.Constant.DELETE_NODE_COMMAND_LENGTH;
-
 public class DeleteNodeCommandFactory implements CommandFactory {
+	private final static int DELETE_NODE_COMMAND_LENGTH = 3;
+
     @Override
     public boolean isSupported(String command) {
         return command.equals("delete_node");
@@ -16,10 +17,10 @@ public class DeleteNodeCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != DELETE_NODE_COMMAND_LENGTH) {
-            throw new IllegalStateException("Invalid delete_node syntax.");
+			throw new InvalidSyntaxException("Invalid delete_node syntax.");
         }
-		String graphName = tokens.get(1);
-		String nodeName = tokens.get(2);
-		return new DeleteNodeCommand(graphName, nodeName);
+		String graph = tokens.get(1);
+		String node = tokens.get(2);
+		return new DeleteNodeCommand(graph, node);
     }
 }

@@ -2,6 +2,7 @@ package command.addgraph;
 
 import command.Constants;
 import command.ExecutionContext;
+import exception.GraphAlreadyExistException;
 import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class AddGraphCommandTest {
 		Assert.assertTrue(graphWasAdded);
     }
 
-    @Test (expected = IllegalStateException.class)
+	@Test(expected = GraphAlreadyExistException.class)
 	public void addDuplicateGraphTest() {
 		AddGraphCommand command = new AddGraphCommand(Constants.GRAPH_NAME);
 		command.execute(context);

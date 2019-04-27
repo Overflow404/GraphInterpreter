@@ -2,12 +2,13 @@ package command.addgraph;
 
 import command.Command;
 import command.CommandFactory;
+import exception.InvalidSyntaxException;
 
 import java.util.List;
 
-import static interpreter.Constant.ADD_GRAPH_COMMAND_LENGTH;
-
 public class AddGraphCommandFactory implements CommandFactory {
+	private final static int ADD_GRAPH_COMMAND_LENGTH = 2;
+
 	@Override
 	public boolean isSupported(String command) {
 		return command.equals("add_graph");
@@ -16,9 +17,9 @@ public class AddGraphCommandFactory implements CommandFactory {
 	@Override
 	public Command parse(List<String> tokens) {
 		if (tokens.size() != ADD_GRAPH_COMMAND_LENGTH) {
-			throw new IllegalStateException("Invalid add_graph syntax.");
+			throw new InvalidSyntaxException("Invalid add_graph syntax.");
 		}
-		String graphName = tokens.get(1);
-		return new AddGraphCommand(graphName);
+		String graph = tokens.get(1);
+		return new AddGraphCommand(graph);
 	}
 }

@@ -1,6 +1,7 @@
 package command.deletegraph;
 
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
 import graph.GraphStorage;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class DeleteGraphCommandTest {
 		Assert.assertTrue(graphRemoved);
     }
 
-    @Test (expected = IllegalStateException.class)
+	@Test(expected = GraphNotFoundException.class)
 	public void commandDeleteGraphOnInexistentGraphTest() {
 		DeleteGraphCommand command = new DeleteGraphCommand(INEXISTENT_GRAPH);
 		command.execute(context);

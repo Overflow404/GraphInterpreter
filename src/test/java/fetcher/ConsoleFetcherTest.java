@@ -5,9 +5,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 
-import static interpreter.Constant.ERROR_EMPTY_COMMAND;
-
 public class ConsoleFetcherTest {
+	private final static String ERROR_EMPTY_COMMAND = "Command is empty.";
 
     @Test
     public void successfulFetchTest() {

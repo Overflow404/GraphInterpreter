@@ -1,6 +1,8 @@
 package command.deletenode;
 
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
+import exception.NodeNotFoundException;
 import graph.Graph;
 import graph.GraphStorage;
 import org.junit.Assert;
@@ -30,13 +32,13 @@ public class DeleteNodeCommandTest {
 		Assert.assertTrue(nodeRemoved);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = GraphNotFoundException.class)
 	public void commandDeleteNodeOnInexistentGraphTest() {
 		DeleteNodeCommand command = new DeleteNodeCommand(INEXISTENT_GRAPH, NODE);
 		command.execute(context);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = NodeNotFoundException.class)
 	public void commandDeleteNodeOnInexistentNodeTest() {
 		DeleteNodeCommand command = new DeleteNodeCommand(GRAPH_NAME, INEXISTENT_NODE);
 		command.execute(context);

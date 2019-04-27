@@ -2,12 +2,13 @@ package command.addnode;
 
 import command.Command;
 import command.CommandFactory;
+import exception.InvalidSyntaxException;
 
 import java.util.List;
 
-import static interpreter.Constant.ADD_NODE_COMMAND_LENGTH;
-
 public class AddNodeCommandFactory implements CommandFactory {
+	private final static int ADD_NODE_COMMAND_LENGTH = 3;
+
     @Override
     public boolean isSupported(String command) {
         return command.equals("add_node");
@@ -16,10 +17,10 @@ public class AddNodeCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != ADD_NODE_COMMAND_LENGTH) {
-            throw new IllegalStateException("Invalid add_node syntax.");
+			throw new InvalidSyntaxException("Invalid add_node syntax.");
         }
-		String graphName = tokens.get(1);
-		String nodeName = tokens.get(2);
-		return new AddNodeCommand(graphName, nodeName);
+		String graph = tokens.get(1);
+		String node = tokens.get(2);
+		return new AddNodeCommand(graph, node);
     }
 }

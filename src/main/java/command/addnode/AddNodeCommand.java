@@ -2,30 +2,30 @@ package command.addnode;
 
 import command.Command;
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
+import exception.NodeAlreadyExistException;
 import graph.Graph;
 import graph.GraphStorage;
 
 public class AddNodeCommand implements Command {
+	private String graph;
+	private String node;
 
-    private String graphName;
-    private String nodeName;
-
-    AddNodeCommand(String graphName, String nodeName) {
-        this.graphName = graphName;
-        this.nodeName = nodeName;
+	AddNodeCommand(String graph, String node) {
+		this.graph = graph;
+		this.node = node;
     }
 
     @Override
 	public void execute(ExecutionContext context) {
 		GraphStorage storage = context.getStorage();
-		if (!storage.exists(graphName)) {
-			throw new IllegalStateException("Graph " + graphName + " does not exist!");
+		if (!storage.exists(graph)) {
+			throw new GraphNotFoundException("Graph " + graph + " does not exist!");
 		}
-		Graph graph = storage.get(graphName);
-		if (graph.containsNode(nodeName)) {
-			throw new IllegalStateException("Node " + nodeName + " already exists!");
+		Graph graph = storage.get(this.graph);
+		if (graph.containsNode(node)) {
+			throw new NodeAlreadyExistException("Node " + node + " already exists!");
 		}
-		graph.addNode(nodeName);
+		graph.addNode(node);
 	}
-
 }

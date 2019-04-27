@@ -2,28 +2,30 @@ package command.deletenode;
 
 import command.Command;
 import command.ExecutionContext;
+import exception.GraphNotFoundException;
+import exception.NodeNotFoundException;
 import graph.Graph;
 import graph.GraphStorage;
 
 public class DeleteNodeCommand implements Command {
-	private String graphName;
-	private String nodeName;
+	private String graph;
+	private String node;
 
-	DeleteNodeCommand(String graphName, String nodeName) {
-		this.graphName = graphName;
-		this.nodeName = nodeName;
+	DeleteNodeCommand(String graph, String node) {
+		this.graph = graph;
+		this.node = node;
 	}
 
 	@Override
 	public void execute(ExecutionContext context) {
 		GraphStorage storage = context.getStorage();
-		if (!storage.exists(graphName)) {
-			throw new IllegalStateException("Graph " + graphName + " does not exist!");
+		if (!storage.exists(graph)) {
+			throw new GraphNotFoundException("Graph " + graph + " does not exist!");
 		}
-		Graph graph = storage.get(graphName);
-		if (!graph.containsNode(nodeName)) {
-			throw new IllegalStateException("Node " + nodeName + " does not exist!");
+		Graph graph = storage.get(this.graph);
+		if (!graph.containsNode(node)) {
+			throw new NodeNotFoundException("Node " + node + " does not exist!");
 		}
-		graph.deleteNode(nodeName);
+		graph.deleteNode(node);
 	}
 }

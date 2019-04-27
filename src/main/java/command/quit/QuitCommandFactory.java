@@ -2,12 +2,13 @@ package command.quit;
 
 import command.Command;
 import command.CommandFactory;
-import command.help.HelpCommand;
+import exception.InvalidSyntaxException;
+
 import java.util.List;
 
-import static interpreter.Constant.QUIT_COMMAND_LENGTH;
-
 public class QuitCommandFactory implements CommandFactory {
+	private final static int QUIT_COMMAND_LENGTH = 1;
+
     @Override
     public boolean isSupported(String command) {
         return command.equals("quit");
@@ -16,7 +17,7 @@ public class QuitCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != QUIT_COMMAND_LENGTH) {
-            throw new IllegalStateException("Invalid quit syntax.");
+			throw new InvalidSyntaxException("Invalid quit syntax.");
         }
         return new QuitCommand();
     }

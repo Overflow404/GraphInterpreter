@@ -1,5 +1,6 @@
 package command.deleteedge;
 
+import exception.InvalidSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class DeleteEdgeCommandFactoryTest {
         return tokens;
     }
 
-    @Test (expected = IllegalStateException.class)
+	@Test(expected = InvalidSyntaxException.class)
     public void unsuccessfulParseTest() {
         List<String> tokens = getDeleteEdgeTokensWithExtra();
         factory.parse(tokens);

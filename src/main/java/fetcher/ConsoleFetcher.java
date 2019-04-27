@@ -2,11 +2,10 @@ package fetcher;
 
 import java.util.Scanner;
 
-import static interpreter.Constant.ERROR_EMPTY_COMMAND;
-
 public class ConsoleFetcher implements Fetcher {
 
     private Scanner scanner;
+	private final static String ERROR_EMPTY_COMMAND = "Command is empty.";
 
     public ConsoleFetcher() {
         scanner = new Scanner(System.in);
