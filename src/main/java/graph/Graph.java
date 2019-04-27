@@ -1,7 +1,7 @@
 package graph;
 
 import org.graphstream.graph.Node;
-import org.graphstream.ui.swingViewer.View;
+import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.Viewer;
 
 import javax.swing.*;
@@ -9,8 +9,8 @@ import javax.swing.*;
 public class Graph {
 	private org.graphstream.graph.Graph graph;
 
-	public Graph(org.graphstream.graph.Graph graph) {
-		this.graph = graph;
+	public Graph(String id) {
+		this.graph = new SingleGraph(id);
 	}
 
 	public void addNode(String id) {
@@ -41,7 +41,6 @@ public class Graph {
 	public JPanel getView() {
 		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_SWING_THREAD);
 		viewer.enableAutoLayout();
-		View view = viewer.addDefaultView(false);
-		return view;
+		return viewer.addDefaultView(false);
 	}
 }

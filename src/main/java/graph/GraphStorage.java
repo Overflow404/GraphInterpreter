@@ -1,7 +1,5 @@
 package graph;
 
-import org.graphstream.graph.implementations.SingleGraph;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +11,7 @@ public class GraphStorage {
 	}
 
 	public Graph add(String id) {
-		SingleGraph g = new SingleGraph(id);
-		Graph graph = new Graph(g);
+		Graph graph = new Graph(id);
 		graphs.put(id, graph);
 		return graph;
 	}
