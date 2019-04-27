@@ -45,19 +45,19 @@ public class DeleteEdgeCommandFactoryTest {
         factory.parse(tokens);
     }
 
-    private List<String> getDeleteEdgeTokens() {
-        List<String> tokens = new ArrayList<>();
-        tokens.add(operation);
-        tokens.add(GRAPH_NAME);
-        tokens.add(EDGE);
-        return tokens;
-    }
-
 	@Test(expected = InvalidSyntaxException.class)
     public void unsuccessfulParseTest() {
         List<String> tokens = getDeleteEdgeTokensWithExtra();
         factory.parse(tokens);
     }
+
+	private List<String> getDeleteEdgeTokens() {
+		List<String> tokens = new ArrayList<>();
+		tokens.add(operation);
+		tokens.add(GRAPH_NAME);
+		tokens.add(EDGE);
+		return tokens;
+	}
 
     private List<String> getDeleteEdgeTokensWithExtra() {
         List<String> tokens = getDeleteEdgeTokens();
