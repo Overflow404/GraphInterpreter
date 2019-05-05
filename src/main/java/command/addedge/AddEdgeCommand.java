@@ -27,6 +27,7 @@ public class AddEdgeCommand implements Command {
 		if (!storage.exists(graph)) {
 			throw new GraphNotFoundException("Graph " + graph + " does not exists!");
         }
+
 		Graph graph = storage.get(this.graph);
 
         if (!graph.containsNode(sourceNode)) {
@@ -36,9 +37,11 @@ public class AddEdgeCommand implements Command {
         if (!graph.containsNode(destinationNode)) {
 			throw new NodeNotFoundException("Node " + destinationNode + " does not exists!");
         }
+
 		if (graph.containsEdge(edge)) {
 			throw new EdgeAlreadyExistException("Edge " + edge + " in graph " + this.graph + " already exists!");
         }
+
 		graph.addEdge(edge, sourceNode, destinationNode);
     }
 }
