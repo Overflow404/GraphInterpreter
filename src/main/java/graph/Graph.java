@@ -5,6 +5,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.Viewer;
 
 import javax.swing.*;
+import java.util.Iterator;
 
 public class Graph {
 	private org.graphstream.graph.Graph graph;
@@ -37,6 +38,19 @@ public class Graph {
 	public boolean containsEdge(String edgeId) {
 		return graph.getEdge(edgeId) != null;
 	}
+
+	public Iterator neighbours(String node) {
+		return graph.getNode(node).getNeighborNodeIterator();
+	}
+
+	public Iterator bfs(String node) {
+		return graph.getNode(node).getBreadthFirstIterator();
+	}
+
+	public Iterator dfs(String node) {
+		return graph.getNode(node).getDepthFirstIterator();
+	}
+
 
 	public JPanel getView() {
 		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_SWING_THREAD);

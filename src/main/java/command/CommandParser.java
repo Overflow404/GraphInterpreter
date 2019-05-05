@@ -3,11 +3,14 @@ package command;
 import command.addedge.AddEdgeCommandFactory;
 import command.addgraph.AddGraphCommandFactory;
 import command.addnode.AddNodeCommandFactory;
+import command.bfs.BfsCommandFactory;
 import command.deleteedge.DeleteEdgeCommandFactory;
 import command.deletegraph.DeleteGraphCommandFactory;
 import command.deletenode.DeleteNodeCommandFactory;
+import command.dfs.DfsCommandFactory;
 import command.display.DisplayCommandFactory;
 import command.help.HelpCommandFactory;
+import command.printneighbours.PrintNeighboursCommandFactory;
 import command.quit.QuitCommandFactory;
 
 import java.util.Arrays;
@@ -22,6 +25,9 @@ public class CommandParser {
             new AddNodeCommandFactory(),
             new DeleteNodeCommandFactory(),
             new DeleteEdgeCommandFactory(),
+            new PrintNeighboursCommandFactory(),
+            new BfsCommandFactory(),
+            new DfsCommandFactory(),
             new DisplayCommandFactory(),
             new HelpCommandFactory(),
             new QuitCommandFactory()
