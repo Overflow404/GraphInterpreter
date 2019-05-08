@@ -16,19 +16,14 @@ public class GraphInterpreter {
     private CommandParser parser;
     private CommandExecutor executor;
 
-    private GraphInterpreter() {
+    public GraphInterpreter() {
         fetcher = new ConsoleFetcher();
         tokenizer = new SpaceTokenizer();
         parser = new CommandParser();
         executor = new CommandExecutor();
     }
 
-    public static void main(String[] args) {
-        GraphInterpreter graphInterpreter = new GraphInterpreter();
-        graphInterpreter.run();
-    }
-
-    private void run() {
+    public void run() {
         while (true) {
             FetchResult fetching = fetcher.fetch();
             if (fetching.isSuccessful()) {
