@@ -1,4 +1,4 @@
-package command.example;
+package example;
 
 import interpreter.GraphInterpreter;
 
