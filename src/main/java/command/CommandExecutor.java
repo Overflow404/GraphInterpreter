@@ -1,7 +1,6 @@
 package command;
 
 public class CommandExecutor {
-
     private ExecutionContext context;
 
     public CommandExecutor() {
@@ -9,13 +8,12 @@ public class CommandExecutor {
     }
 
     public void execute(Command command) {
-		try {
-			command.execute(context);
-			System.out.println("Successful command!");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
+        try {
+            command.execute(context);
+            System.out.println("Successful command!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public ExecutionContext getContext() {

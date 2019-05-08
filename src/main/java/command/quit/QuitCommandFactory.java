@@ -7,7 +7,7 @@ import exception.InvalidSyntaxException;
 import java.util.List;
 
 public class QuitCommandFactory implements CommandFactory {
-	private final static int QUIT_COMMAND_LENGTH = 1;
+    private final static int QUIT_COMMAND_LENGTH = 1;
 
     @Override
     public boolean isSupported(String command) {
@@ -17,7 +17,7 @@ public class QuitCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != QUIT_COMMAND_LENGTH) {
-			throw new InvalidSyntaxException("Invalid quit syntax.");
+            throw new InvalidSyntaxException("Invalid quit syntax.");
         }
         return new QuitCommand();
     }

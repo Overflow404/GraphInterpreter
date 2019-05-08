@@ -1,14 +1,14 @@
 package tokenizer;
 
 import interpreter.Result;
+
 import java.util.List;
 
 public class TokenizerResult {
-
     private List<String> tokens;
     private Result result;
 
-    static  TokenizerResult createSuccessfulResult(List<String> tokens) {
+    static TokenizerResult createSuccessfulResult(List<String> tokens) {
         return new TokenizerResult().add(tokens).add(Result.SUCCESSFUL);
     }
 

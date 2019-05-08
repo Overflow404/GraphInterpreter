@@ -17,6 +17,6 @@ public class HelpCommand implements Command {
         //System.out.println("\tdfs [graph_id] [source_node_id]");
         System.out.println("\tdisplay [graph_id]");
         System.out.println("\thelp");
-		System.out.println("\tquit");
+        System.out.println("\tquit");
     }
 }

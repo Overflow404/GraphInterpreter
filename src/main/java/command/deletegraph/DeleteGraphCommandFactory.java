@@ -7,7 +7,7 @@ import exception.InvalidSyntaxException;
 import java.util.List;
 
 public class DeleteGraphCommandFactory implements CommandFactory {
-	private final static int DELETE_GRAPH_COMMAND_LENGTH = 2;
+    private final static int DELETE_GRAPH_COMMAND_LENGTH = 2;
 
     @Override
     public boolean isSupported(String command) {
@@ -17,9 +17,9 @@ public class DeleteGraphCommandFactory implements CommandFactory {
     @Override
     public Command parse(List<String> tokens) {
         if (tokens.size() != DELETE_GRAPH_COMMAND_LENGTH) {
-			throw new InvalidSyntaxException("Invalid delete_graph syntax.");
+            throw new InvalidSyntaxException("Invalid delete_graph syntax.");
         }
-		String graph = tokens.get(1);
-		return new DeleteGraphCommand(graph);
+        String graph = tokens.get(1);
+        return new DeleteGraphCommand(graph);
     }
 }

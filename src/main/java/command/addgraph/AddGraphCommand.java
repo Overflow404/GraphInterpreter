@@ -6,18 +6,18 @@ import exception.GraphAlreadyExistException;
 import graph.GraphStorage;
 
 public class AddGraphCommand implements Command {
-	private String graph;
+    private String graph;
 
-	AddGraphCommand(String graph) {
-		this.graph = graph;
+    AddGraphCommand(String graph) {
+        this.graph = graph;
     }
 
     @Override
     public void execute(ExecutionContext context) {
-		GraphStorage storage = context.getStorage();
-		if (storage.exists(graph)) {
-			throw new GraphAlreadyExistException("Graph " + graph + " already exist!");
+        GraphStorage storage = context.getStorage();
+        if (storage.exists(graph)) {
+            throw new GraphAlreadyExistException("Graph " + graph + " already exist!");
         }
-		storage.add(graph);
+        storage.add(graph);
     }
 }

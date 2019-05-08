@@ -5,7 +5,6 @@ import interpreter.Result;
 import java.util.Objects;
 
 public class FetchResult {
-
     private Result result;
     private String command;
 

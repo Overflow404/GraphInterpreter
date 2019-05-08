@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandParser {
-
     private List<CommandFactory> factories = Arrays.asList(
             new AddGraphCommandFactory(),
             new DeleteGraphCommandFactory(),
@@ -35,12 +34,11 @@ public class CommandParser {
 
     public Command parse(List<String> tokens) {
         String command = tokens.get(0);
-        for (CommandFactory factory:factories) {
+        for (CommandFactory factory : factories) {
             if (factory.isSupported(command)) {
                 return factory.parse(tokens);
             }
         }
-
         throw new IllegalArgumentException("Unknown command " + command);
     }
 }

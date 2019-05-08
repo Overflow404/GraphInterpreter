@@ -26,7 +26,6 @@ public class AddNodeCommand implements Command {
         if (graph.containsNode(node)) {
             throw new NodeAlreadyExistException("Node " + node + " already exists!");
         }
-
         graph.addNode(node);
     }
 }

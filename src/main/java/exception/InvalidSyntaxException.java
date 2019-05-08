@@ -1,7 +1,7 @@
 package exception;
 
 public class InvalidSyntaxException extends RuntimeException {
-	public InvalidSyntaxException(String message) {
-		super(message);
-	}
+    public InvalidSyntaxException(String message) {
+        super(message);
+    }
 }

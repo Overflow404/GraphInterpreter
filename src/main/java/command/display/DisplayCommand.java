@@ -8,20 +8,20 @@ import graph.Graph;
 import graph.GraphStorage;
 
 public class DisplayCommand implements Command {
-	private String graph;
+    private String graph;
 
-	DisplayCommand(String graph) {
-		this.graph = graph;
+    DisplayCommand(String graph) {
+        this.graph = graph;
     }
 
     @Override
     public void execute(ExecutionContext context) {
-		GraphStorage storage = context.getStorage();
-		if (!storage.exists(graph)) {
-			throw new GraphNotFoundException("Graph " + graph + " does not exist!");
+        GraphStorage storage = context.getStorage();
+        if (!storage.exists(graph)) {
+            throw new GraphNotFoundException("Graph " + graph + " does not exist!");
         }
-		Graph graph = storage.get(this.graph);
-		DisplayManager displayManager = context.getDisplayManager();
-		displayManager.display(graph);
+        Graph graph = storage.get(this.graph);
+        DisplayManager displayManager = context.getDisplayManager();
+        displayManager.display(graph);
     }
 }
